@@ -1,0 +1,156 @@
+@extends('layouts.admin.app')
+@section('plug-css')
+    <link href="{{ asset('js/bootstrap-table/dist/bootstrap-table.css') }}" rel="stylesheet">
+@endsection
+@section('crumbs')
+    <ol class="breadcrumb crumbs">
+        <li><a href="{{ route('admin.index') }}#">后台导航</a></li>
+        <li><a href="{{ route('admin.$MKDIR$.index') }}">后台$MKDIRUC$首页</a></li>
+        <li class="active">$MKDIRUC$列表</li>
+    </ol>
+@endsection
+
+@section('content')
+    <form id="searchForm" class="form-inline">
+        <div class="">
+            <div class="form-group">
+                <label for="name" class="label-css"> ID：</label>
+                <input class="form-control" type="text" name="id">
+            </div>
+            &ensp;&ensp;
+            <button type="button" class="btn btn-primary">查询</button>
+        </div>
+    </form>
+    <hr class="hr-css">
+    <div>
+        <div id="toolbar">
+            <div class="columns columns-left btn-group pull-left">
+                <a class="createForm" data-url="{{ route('admin.$MKDIR$.store') }}" data-title="create">
+                    <button class="btn btn-default" type="button">
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>&ensp;新增$MKDIRUC$
+                    </button>
+                </a>
+                <a>
+                    <button id="deleteAll" data-url="{{ route('admin.$MKDIR$.destroys') }}" class="btn btn-default" type="button">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&ensp;删除
+                    </button>
+                </a>
+            </div>
+        </div>
+        <table id="ContentTable"></table>
+    </div>
+@endsection
+
+@section('plug-js')
+    <script src="{{ asset('js/bootstrap-table/dist/bootstrap-table.js') }}"></script>
+    <script src="{{ asset('js/bootstrap-table/dist/locale/bootstrap-table-zh-CN.js') }}"></script>
+    <script src="{{ asset('js/jquery-validation1.16/dist/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-validation1.16/dist/additional-methods.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-validation1.16/src/localization/messages_zh.js') }}"></script>
+@endsection
+
+@section('scripts')
+    <script>
+        $(function(){
+            BootStrapInit.init('table$MKDIRUC$','ContentTable',{
+                searchForm: 'searchForm',   // 表单搜索id 省略默认 'searchForm'
+                url: "{{ route('admin.$MKDIR$.ajax.index') }}",
+                method: 'post',
+                toolbar: '#toolbar',
+                idField: '',        // 指定主键列
+                uniqueId: "id",     // 这里需要指定当前查询表唯一主键字段
+                columns: [
+                    {
+                        checkbox: true,
+                        align: 'center',
+                        valign: 'middle'
+                    },
+                    {
+                        field: 'id',
+                        title: 'ID',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true
+                    },
+                    {
+                        field: 'image',
+                        title: 'Image',
+                        align: 'center',
+                        valign: 'middle',
+                        formatter:thumbFormatter
+                    },
+                    // {
+                    //     field: 'link',
+                    //     title: '链接',
+                    //     align: 'center',
+                    //     valign: 'middle'
+                    // },
+                    {
+                        field: 'show',
+                        title: '显示',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        formatter:yesOrNo,
+                        bool_data:{
+                            'class' : 'cursor',
+//                            'url'   : 'javascript:;',
+                            'table' : '$MKDIRS$'
+//                            'pk' : 'id'   // 主键名称不写默认id主键
+                        }
+                    },
+                    {
+                        field: 'sort',
+                        title: '排序',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true,
+                        formatter:inputData,
+                        input_data: {
+//                        'class' : 'cursor',     // 当前样式
+//                        'url'   : 'javascript', // url存在 及请求指定地址修改数据
+                            'table' : '$MKDIRS$'   // url为空时采用,
+//                        'pk'    : 'id'          // 默认修改主键名称 不写 默认id为主键
+                        }
+                    },
+                    {
+                        field: 'created_at',
+                        title: '创建时间',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true
+                    },
+                    {
+                        field: 'updated_at',
+                        title: '更新时间',
+                        align: 'center',
+                        valign: 'middle',
+                        sortable: true
+                    },
+                    {
+                        pkId: 'id',         // 当前主键id 兼容排序 field='id' 默认值id
+                        title: '操作',
+                        align: 'center',
+                        valign: 'middle',
+                        width: '185px',
+                        formatter:operateFormatter,
+                        btn_group:[
+                            {
+                                'name'  : '编辑',
+                                'class' : 'btn-primary createForm',
+                                'url'   : 'javascript:;',
+                                'confirm_url': '{{ route('admin.$MKDIR$.edit', ['id'=>'-val-'])}}'
+                            },
+                            {
+                                'name'  : '删除',
+                                'class' : 'btn-danger deleteBtn', // class标签 deleteBtn删除 layer弹出框
+                                'url'   : 'javascript:;',
+                                'confirm_url': '{{ route('admin.$MKDIR$.destroy', ['id'=>'-val-'])}}'   // 选择按钮
+                            }
+                        ]
+                    }
+                ]
+            });
+        });
+    </script>
+@endsection
