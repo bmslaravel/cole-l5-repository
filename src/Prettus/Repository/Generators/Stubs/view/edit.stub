@@ -1,6 +1,6 @@
 <div style="margin-top: 10px;" id="$MKDIRS$-app">
     <div style="text-align: center;margin-top: 5px;margin-bottom: 10px;font-size: 20px;">
-        编辑$MKDIRUC$
+        编辑
     </div>
     <el-form action="{{route('admin.$MKDIR$.update',array('id'=>$model->id))}}" method="post" id="form-create">
         <!-- 图片 -->
