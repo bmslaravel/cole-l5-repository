@@ -3,19 +3,19 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['domain' => env('APP_HOST'), 'prefix' => 'admin/$MKDIR$'],function(){
-    Route::get('index', '$CLASS$Controller@index')->name('admin.$MKDIR$.index');
-    Route::post('index', '$CLASS$Controller@index')->name('admin.$MKDIR$.ajax.index');
+    Route::get('index', '$CLASSS$Controller@index')->name('admin.$MKDIR$.index');
+    Route::post('index', '$CLASSS$Controller@index')->name('admin.$MKDIR$.ajax.index');
 
-    Route::get('store','$CLASS$Controller@store')->name('admin.$MKDIR$.store');
-    Route::post('store','$CLASS$Controller@store')->name('admin.$MKDIR$.save');
+    Route::get('store','$CLASSS$Controller@store')->name('admin.$MKDIR$.store');
+    Route::post('store','$CLASSS$Controller@store')->name('admin.$MKDIR$.save');
 
-    Route::post('destroy/{id?}','$CLASS$Controller@destroy')->name('admin.$MKDIR$.destroy');
-    Route::post('destroys','$CLASS$Controller@destroys')->name('admin.$MKDIR$.destroys');
+    Route::post('destroy/{id?}','$CLASSS$Controller@destroy')->name('admin.$MKDIR$.destroy');
+    Route::post('destroys','$CLASSS$Controller@destroys')->name('admin.$MKDIR$.destroys');
 
-    Route::get('edit/{id?}','$CLASS$Controller@edit')->name('admin.$MKDIR$.edit');
-    Route::post('update/{id?}','$CLASS$Controller@update')->name('admin.$MKDIR$.update');
+    Route::get('edit/{id?}','$CLASSS$Controller@edit')->name('admin.$MKDIR$.edit');
+    Route::post('update/{id?}','$CLASSS$Controller@update')->name('admin.$MKDIR$.update');
 });
 
 Route::group(['domain' => env('APP_HOST_WEB'), 'prefix' => '$MKDIR$'],function (){
-    Route::post('list', 'Front\\$CLASS$Controller@index');
+    Route::post('list', 'Front\\$CLASSS$Controller@index');
 });

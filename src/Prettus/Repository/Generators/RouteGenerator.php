@@ -87,6 +87,7 @@ class RouteGenerator extends Generator
 
         return array_merge(parent::getReplacements(), [
             'mkdir'      => $this->getSingularName(),
+            'classs'     => ucfirst($this->getPluralName()),
         ]);
     }
 
